@@ -2,6 +2,8 @@ const express = require("express"); // invoke the express to use it
 const cors = require("cors"); // cors will allow us to communicate with frontend
 const mongoose = require("mongoose"); // it will help us to connect with mongodb
 const userRouter = require("./Routes/userRoute.ts");
+const ChatRouter = require("./Routes/ChatRoute.ts");
+
 
 const app = express(); // create app and initialize express
 
@@ -14,14 +16,15 @@ app.use(express.json()); // it is middleware function, it will help to use json 
 app.use(cors());
 
 app.use("/api/users", userRouter);
+app.use("/api/chats", ChatRouter);
 
-app.get("/", (req: any, res: any) => {
+app.get("/", (req, res) => {
   res.send("Welcome our Chatbox APIs");
 });
 const ipAdress = process.env.IPADRESS;
 const port = process.env.PORT || 5000;
 
-app.listen(port, ipAdress, (req: any, res: any) => {
+app.listen(port, ipAdress, (req, res) => {
   // this will listen the port and it will take two arguments request and response
   console.log(`sever running on port... :${port}`);
 });
@@ -32,6 +35,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log("MongoDb connected"))
-  .catch((error: any) =>
+  .catch((error) =>
     console.log("MonoDb connection failed:", error.message)
   );

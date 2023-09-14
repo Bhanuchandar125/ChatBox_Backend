@@ -3,12 +3,12 @@ const userModel = require("../Models/userModels.ts");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 
-const createToken = (_id: any) => {
+const createToken = (_id) => {
   const jwtkey = process.env.JWT_SECRET_KEY;
   return jwt.sign({ _id }, jwtkey, { expiresIn: "3d" });
 };
 
-const registerUser = async (req: any, res: any) => {
+const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -37,13 +37,13 @@ const registerUser = async (req: any, res: any) => {
     const token = createToken(user._id);
 
     res.status(200).json({ _id: user._id, name, email, token });
-  } catch (error: any) {
+  } catch (error) {
     console.log(error.message);
     res.status(500).json(error);
   }
 };
 
-const loginUser = async (req: any, res: any) => {
+const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -56,13 +56,13 @@ const loginUser = async (req: any, res: any) => {
 
     const token = createToken(user._id);
     res.status(200).json({ _id: user.id, name: user.name, email, token });
-  } catch (error: any) {
+  } catch (error) {
     console.log(error.message);
     res.status(500).json(error);
   }
 };
 
-const findUser = async (req: any, res: any) => {
+const findUser = async (req, res) => {
   const userId = req.params.userId;
 
   try {
@@ -70,17 +70,17 @@ const findUser = async (req: any, res: any) => {
     if (!user) return res.status(400).json("User not exist...");
 
     res.status(200).json(user);
-  } catch (error: any) {
+  } catch (error) {
     console.log(error.message);
     res.status(500).json(error);
   }
 };
 
-const getUsers = async (req: any, res: any) => {
+const getUsers = async (req, res) => {
   try {
     const users = await userModel.find();
     res.status(200).json(users);
-  } catch (error: any) {
+  } catch (error) {
     console.log(error.message);
     res.status(500).json(error);
   }
