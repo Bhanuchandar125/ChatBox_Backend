@@ -3,6 +3,7 @@ const cors = require("cors"); // cors will allow us to communicate with frontend
 const mongoose = require("mongoose"); // it will help us to connect with mongodb
 const userRouter = require("./Routes/userRoute.ts");
 const ChatRouter = require("./Routes/ChatRoute.ts");
+const MessageRouter = require("./Routes/MessageRoute.ts")
 
 
 const app = express(); // create app and initialize express
@@ -17,6 +18,7 @@ app.use(cors());
 
 app.use("/api/users", userRouter);
 app.use("/api/chats", ChatRouter);
+app.use("/api/messages", MessageRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome our Chatbox APIs");
